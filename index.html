@@ -4,87 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор заработка курьера</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --text-color: #333;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-color: #ddd;
+            --result-title-color: #2c3e50;
+            --result-value-color: #27ae60;
+            --summary-bg: #e8f4fc;
+            --summary-title-color: #2980b9;
+        }
+
+        .dark-theme {
+            --primary-color: #2980b9;
+            --secondary-color: #1a252f;
+            --text-color: #ecf0f1;
+            --bg-color: #1a252f;
+            --card-bg: #2c3e50;
+            --input-bg: #34495e;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --border-color: #4a6572;
+            --result-title-color: #ecf0f1;
+            --result-value-color: #2ecc71;
+            --summary-bg: #34495e;
+            --summary-title-color: #3498db;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
         }
-        
+
         body {
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            padding: 20px;
+            padding: 15px;
+            min-height: 100vh;
         }
-        
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: white;
+            background: var(--card-bg);
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px var(--shadow-color);
             overflow: hidden;
         }
-        
+
         header {
-            background: #2c3e50;
+            background: var(--secondary-color);
             color: white;
-            padding: 20px;
-            text-align: center;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
         }
-        
+
         h1 {
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
         }
-        
+
         .description {
-            font-size: 16px;
+            font-size: 0.9rem;
             opacity: 0.9;
         }
-        
+
+        .theme-switch {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
+        .theme-switch-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .theme-switch-label i {
+            margin-right: 5px;
+        }
+
         .content {
             display: flex;
             flex-wrap: wrap;
-            padding: 20px;
+            padding: 15px;
         }
-        
+
+        .input-section, .results-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+        }
+
         .input-section {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
-            background: #f8f9fa;
+            background: var(--card-bg);
             border-radius: 8px;
-            margin-right: 20px;
+            margin-right: 15px;
         }
-        
-        .results-section {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
-        }
-        
-        .form-group {
+
+        .section-title {
+            color: var(--primary-color);
             margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.2rem;
         }
-        
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: 600;
+            font-size: 0.9rem;
         }
-        
+
         input {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             font-size: 16px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
         }
-        
+
         button {
-            background: #2c3e50;
+            background: var(--primary-color);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -95,68 +157,140 @@
             margin-top: 10px;
             transition: background 0.3s;
         }
-        
+
         button:hover {
-            background: #1a252f;
+            background: var(--secondary-color);
         }
-        
+
         .result-card {
-            background: #f8f9fa;
-            padding: 15px;
+            background: var(--card-bg);
+            padding: 12px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 12px;
+            box-shadow: 0 2px 5px var(--shadow-color);
         }
-        
+
         .result-title {
             font-weight: 600;
-            margin-bottom: 10px;
-            color: #2c3e50;
-            border-bottom: 1px solid #ddd;
+            margin-bottom: 8px;
+            color: var(--result-title-color);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 5px;
+            font-size: 0.9rem;
         }
-        
+
         .result-value {
-            font-size: 18px;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #27ae60;
+            color: var(--result-value-color);
         }
-        
+
         .summary {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e8f4fc;
+            margin-top: 15px;
+            padding: 12px;
+            background: var(--summary-bg);
             border-radius: 8px;
         }
-        
+
         .summary-title {
             font-weight: 700;
             margin-bottom: 10px;
-            color: #2980b9;
+            color: var(--summary-title-color);
         }
-        
+
+        /* Мобильная адаптация */
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 12px 15px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .theme-switch {
+                position: static;
+                margin-top: 10px;
+            }
+            
             .content {
                 flex-direction: column;
+                padding: 10px;
             }
             
             .input-section {
                 margin-right: 0;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .input-section, .results-section {
+                padding: 12px;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
+            
+            input, button {
+                padding: 8px;
+            }
+            
+            .result-value {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            
+            .description {
+                font-size: 0.8rem;
+            }
+            
+            .section-title {
+                font-size: 1rem;
+            }
+            
+            label, input, button {
+                font-size: 14px;
+            }
+            
+            .result-title {
+                font-size: 0.85rem;
+            }
+            
+            .result-value {
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
-<body>
+<body class="light-theme">
     <div class="container">
         <header>
-            <h1>Калькулятор заработка курьера</h1>
-            <p class="description">Расчет доходов с учетом расходов на бензин и другие затраты</p>
+            <div>
+                <h1>Калькулятор заработка курьера</h1>
+                <p class="description">Расчет доходов с учетом расходов на бензин и другие затраты</p>
+            </div>
+            <div class="theme-switch">
+                <label class="theme-switch-label">
+                    <input type="checkbox" id="theme-toggle">
+                    <i class="fas fa-moon"></i> Тёмная тема
+                </label>
+            </div>
         </header>
         
         <div class="content">
             <div class="input-section">
-                <h2>Параметры работы</h2>
+                <h2 class="section-title">Параметры работы</h2>
                 
                 <div class="form-group">
                     <label for="orders-per-hour">Заказов в час</label>
@@ -173,7 +307,7 @@
                     <input type="number" id="price-per-order" min="0" step="1" value="150">
                 </div>
                 
-                <h2>Расходы</h2>
+                <h2 class="section-title">Расходы</h2>
                 
                 <div class="form-group">
                     <label for="fuel-per-day">Расход бензина в день (литров)</label>
@@ -190,7 +324,7 @@
                     <input type="number" id="other-costs" min="0" step="1" value="200">
                 </div>
                 
-                <h2>График работы</h2>
+                <h2 class="section-title">График работы</h2>
                 
                 <div class="form-group">
                     <label for="work-days-week">Рабочих дней в неделю</label>
@@ -206,7 +340,7 @@
             </div>
             
             <div class="results-section">
-                <h2>Результаты расчета</h2>
+                <h2 class="section-title">Результаты расчета</h2>
                 
                 <div class="result-card">
                     <div class="result-title">Заказов в день</div>
@@ -246,8 +380,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Получаем элементы DOM
+            // Элементы DOM
             const calculateBtn = document.getElementById('calculate-btn');
+            const themeToggle = document.getElementById('theme-toggle');
             
             // Параметры работы
             const ordersPerHourInput = document.getElementById('orders-per-hour');
@@ -308,10 +443,31 @@
             calculateBtn.addEventListener('click', calculate);
             
             // Автоматический расчет при изменении любого поля
-            const allInputs = document.querySelectorAll('input');
+            const allInputs = document.querySelectorAll('input:not(#theme-toggle)');
             allInputs.forEach(input => {
                 input.addEventListener('input', calculate);
             });
+            
+            // Переключение темы
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.classList.remove('light-theme');
+                    document.body.classList.add('dark-theme');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    document.body.classList.add('light-theme');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // Проверка сохраненной темы
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                themeToggle.checked = true;
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+            }
             
             // Первоначальный расчет
             calculate();
