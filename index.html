@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор заработка курьера</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        
+        .input-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        
+        .results-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #1a252f;
+        }
+        
+        .result-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .result-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #27ae60;
+        }
+        
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f4fc;
+            border-radius: 8px;
+        }
+        
+        .summary-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .input-section {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Калькулятор заработка курьера</h1>
+            <p class="description">Расчет доходов с учетом расходов на бензин и другие затраты</p>
+        </header>
+        
+        <div class="content">
+            <div class="input-section">
+                <h2>Параметры работы</h2>
+                
+                <div class="form-group">
+                    <label for="orders-per-hour">Заказов в час</label>
+                    <input type="number" id="orders-per-hour" min="0" step="0.1" value="2.5">
+                </div>
+                
+                <div class="form-group">
+                    <label for="hours-per-day">Рабочих часов в день</label>
+                    <input type="number" id="hours-per-day" min="0" step="0.5" value="8">
+                </div>
+                
+                <div class="form-group">
+                    <label for="price-per-order">Цена за один заказ (руб.)</label>
+                    <input type="number" id="price-per-order" min="0" step="1" value="150">
+                </div>
+                
+                <h2>Расходы</h2>
+                
+                <div class="form-group">
+                    <label for="fuel-per-day">Расход бензина в день (литров)</label>
+                    <input type="number" id="fuel-per-day" min="0" step="0.1" value="5">
+                </div>
+                
+                <div class="form-group">
+                    <label for="fuel-price">Цена бензина за литр (руб.)</label>
+                    <input type="number" id="fuel-price" min="0" step="0.1" value="50">
+                </div>
+                
+                <div class="form-group">
+                    <label for="other-costs">Другие расходы в день (руб.)</label>
+                    <input type="number" id="other-costs" min="0" step="1" value="200">
+                </div>
+                
+                <h2>График работы</h2>
+                
+                <div class="form-group">
+                    <label for="work-days-week">Рабочих дней в неделю</label>
+                    <input type="number" id="work-days-week" min="1" max="7" step="1" value="6">
+                </div>
+                
+                <div class="form-group">
+                    <label for="work-days-month">Рабочих дней в месяц</label>
+                    <input type="number" id="work-days-month" min="1" max="31" step="1" value="24">
+                </div>
+                
+                <button id="calculate-btn">Рассчитать</button>
+            </div>
+            
+            <div class="results-section">
+                <h2>Результаты расчета</h2>
+                
+                <div class="result-card">
+                    <div class="result-title">Заказов в день</div>
+                    <div class="result-value" id="daily-orders">20.00</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-title">Доход в день</div>
+                    <div class="result-value" id="daily-income">3000.00 руб.</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-title">Расходы в день</div>
+                    <div class="result-value" id="daily-costs">450.00 руб.</div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-title">Чистый доход в день</div>
+                    <div class="result-value" id="daily-profit">2550.00 руб.</div>
+                </div>
+                
+                <div class="summary">
+                    <div class="summary-title">Итоговый заработок</div>
+                    <div class="result-card">
+                        <div class="result-title">В неделю</div>
+                        <div class="result-value" id="weekly-profit">15300.00 руб.</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-title">В месяц</div>
+                        <div class="result-value" id="monthly-profit">61200.00 руб.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем элементы DOM
+            const calculateBtn = document.getElementById('calculate-btn');
+            
+            // Параметры работы
+            const ordersPerHourInput = document.getElementById('orders-per-hour');
+            const hoursPerDayInput = document.getElementById('hours-per-day');
+            const pricePerOrderInput = document.getElementById('price-per-order');
+            
+            // Расходы
+            const fuelPerDayInput = document.getElementById('fuel-per-day');
+            const fuelPriceInput = document.getElementById('fuel-price');
+            const otherCostsInput = document.getElementById('other-costs');
+            
+            // График работы
+            const workDaysWeekInput = document.getElementById('work-days-week');
+            const workDaysMonthInput = document.getElementById('work-days-month');
+            
+            // Результаты
+            const dailyOrdersElement = document.getElementById('daily-orders');
+            const dailyIncomeElement = document.getElementById('daily-income');
+            const dailyCostsElement = document.getElementById('daily-costs');
+            const dailyProfitElement = document.getElementById('daily-profit');
+            const weeklyProfitElement = document.getElementById('weekly-profit');
+            const monthlyProfitElement = document.getElementById('monthly-profit');
+            
+            // Функция расчета
+            function calculate() {
+                // Получаем значения из полей ввода
+                const ordersPerHour = parseFloat(ordersPerHourInput.value) || 0;
+                const hoursPerDay = parseFloat(hoursPerDayInput.value) || 0;
+                const pricePerOrder = parseFloat(pricePerOrderInput.value) || 0;
+                
+                const fuelPerDay = parseFloat(fuelPerDayInput.value) || 0;
+                const fuelPrice = parseFloat(fuelPriceInput.value) || 0;
+                const otherCosts = parseFloat(otherCostsInput.value) || 0;
+                
+                const workDaysWeek = parseFloat(workDaysWeekInput.value) || 0;
+                const workDaysMonth = parseFloat(workDaysMonthInput.value) || 0;
+                
+                // Выполняем расчеты
+                const dailyOrders = ordersPerHour * hoursPerDay;
+                const dailyIncome = dailyOrders * pricePerOrder;
+                const dailyFuelCost = fuelPerDay * fuelPrice;
+                const dailyCosts = dailyFuelCost + otherCosts;
+                const dailyProfit = dailyIncome - dailyCosts;
+                
+                const weeklyProfit = dailyProfit * workDaysWeek;
+                const monthlyProfit = dailyProfit * workDaysMonth;
+                
+                // Обновляем результаты на странице
+                dailyOrdersElement.textContent = dailyOrders.toFixed(2);
+                dailyIncomeElement.textContent = dailyIncome.toFixed(2) + ' руб.';
+                dailyCostsElement.textContent = dailyCosts.toFixed(2) + ' руб.';
+                dailyProfitElement.textContent = dailyProfit.toFixed(2) + ' руб.';
+                weeklyProfitElement.textContent = weeklyProfit.toFixed(2) + ' руб.';
+                monthlyProfitElement.textContent = monthlyProfit.toFixed(2) + ' руб.';
+            }
+            
+            // Обработчик события для кнопки расчета
+            calculateBtn.addEventListener('click', calculate);
+            
+            // Автоматический расчет при изменении любого поля
+            const allInputs = document.querySelectorAll('input');
+            allInputs.forEach(input => {
+                input.addEventListener('input', calculate);
+            });
+            
+            // Первоначальный расчет
+            calculate();
+        });
+    </script>
+</body>
+</html>
