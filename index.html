@@ -171,12 +171,20 @@
             background: var(--secondary-color);
         }
 
+        .results-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
         .result-card {
             background: var(--card-bg);
             padding: 10px;
             border-radius: 6px;
-            margin-bottom: 10px;
             box-shadow: 0 1px 3px var(--shadow-color);
+            flex: 1;
+            min-width: 120px;
         }
 
         .result-title {
@@ -184,12 +192,14 @@
             margin-bottom: 6px;
             color: var(--result-title-color);
             font-size: 0.85rem;
+            white-space: nowrap;
         }
 
         .result-value {
             font-size: 1rem;
             font-weight: 700;
             color: var(--result-value-color);
+            white-space: nowrap;
         }
 
         .summary {
@@ -206,6 +216,11 @@
             font-size: 0.9rem;
         }
 
+        .summary-row {
+            display: flex;
+            gap: 10px;
+        }
+
         .average-value {
             color: var(--highlight-color);
             font-weight: 600;
@@ -215,12 +230,6 @@
         .info-text {
             font-size: 0.8rem;
             color: var(--primary-color);
-            margin-top: 4px;
-        }
-
-        .warning {
-            color: var(--warning-color);
-            font-size: 0.85rem;
             margin-top: 4px;
         }
 
@@ -261,6 +270,15 @@
                 font-size: 1rem;
             }
             
+            .results-row, .summary-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .result-card {
+                min-width: auto;
+            }
+            
             input, button {
                 padding: 7px;
                 font-size: 13px;
@@ -296,7 +314,7 @@
                 font-size: 0.9rem;
             }
             
-            .info-text, .warning {
+            .info-text {
                 font-size: 0.78rem;
             }
             
@@ -429,39 +447,43 @@
             </div>
             
             <div class="results-section">
-                <h2 class="section-title">Результаты</h2>
+                <h2 class="section-title">Результаты за день</h2>
                 
-                <div class="result-card">
-                    <div class="result-title">Заказов в день</div>
-                    <div class="result-value" id="daily-orders">20.00</div>
-                </div>
-                
-                <div class="result-card">
-                    <div class="result-title">Доход в день</div>
-                    <div class="result-value" id="daily-income">3000.00 руб.</div>
-                </div>
-                
-                <div class="result-card">
-                    <div class="result-title">Расходы в день</div>
-                    <div class="result-value" id="daily-costs">450.00 руб.</div>
-                </div>
-                
-                <div class="result-card">
-                    <div class="result-title">Чистый доход в день</div>
-                    <div class="result-value" id="daily-profit">2550.00 руб.</div>
+                <div class="results-row">
+                    <div class="result-card">
+                        <div class="result-title">Заказов</div>
+                        <div class="result-value" id="daily-orders">20.00</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-title">Доход</div>
+                        <div class="result-value" id="daily-income">3000.00 руб.</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-title">Расходы</div>
+                        <div class="result-value" id="daily-costs">450.00 руб.</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-title">Чистый доход</div>
+                        <div class="result-value" id="daily-profit">2550.00 руб.</div>
+                    </div>
                 </div>
                 
                 <div class="summary">
                     <div class="summary-title">Итоговый заработок</div>
                     
-                    <div class="result-card">
-                        <div class="result-title">В неделю</div>
-                        <div class="result-value" id="weekly-profit">15300.00 руб.</div>
-                    </div>
-                    
-                    <div class="result-card">
-                        <div class="result-title">В месяц</div>
-                        <div class="result-value" id="monthly-profit">61200.00 руб.</div>
+                    <div class="summary-row">
+                        <div class="result-card">
+                            <div class="result-title">В неделю</div>
+                            <div class="result-value" id="weekly-profit">15300.00 руб.</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-title">В месяц</div>
+                            <div class="result-value" id="monthly-profit">61200.00 руб.</div>
+                        </div>
                     </div>
                 </div>
             </div>
