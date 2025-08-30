@@ -244,62 +244,74 @@
             background: var(--secondary-color);
         }
 
-        /* Компактное расположение результатов */
-        .compact-results {
+        /* Стили результатов как на изображении */
+        .results-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .compact-result {
-            flex: 1;
-            min-width: 120px;
+        .daily-results, .final-results {
             background: var(--card-bg);
-            padding: 10px;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px var(--shadow-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        .results-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
             text-align: center;
         }
 
-        .compact-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--result-title-color);
-            font-size: 0.85rem;
-            white-space: nowrap;
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
-        .compact-value {
-            font-size: 1rem;
+        .result-item {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .result-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--result-title-color);
+            font-size: 0.95rem;
+        }
+
+        .result-amount {
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--result-value-color);
-            white-space: nowrap;
         }
 
-        .compact-summary {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
+        .final-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
-        .compact-summary-item {
-            flex: 1;
-            background: var(--summary-bg);
-            padding: 10px;
-            border-radius: 6px;
+        .final-item {
             text-align: center;
+            padding: 12px;
+            background: var(--summary-bg);
+            border-radius: 6px;
         }
 
-        .summary-title {
-            font-weight: 700;
-            margin-bottom: 5px;
+        .final-label {
+            font-weight: 600;
+            margin-bottom: 8px;
             color: var(--summary-title-color);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
-        .summary-value {
-            font-size: 1rem;
+        .final-amount {
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--result-value-color);
         }
@@ -355,9 +367,9 @@
                 font-size: 1rem;
             }
             
-            .compact-results, .compact-summary {
-                flex-direction: column;
-                gap: 8px;
+            .results-grid, .final-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
             }
             
             input, button {
@@ -365,8 +377,8 @@
                 font-size: 16px;
             }
             
-            .compact-value, .summary-value {
-                font-size: 0.95rem;
+            .result-amount, .final-amount {
+                font-size: 1.1rem;
             }
 
             .keyboard-key {
@@ -401,12 +413,12 @@
                 font-size: 16px;
             }
             
-            .compact-title {
-                font-size: 0.82rem;
+            .result-label, .final-label {
+                font-size: 0.9rem;
             }
             
-            .compact-value, .summary-value {
-                font-size: 0.9rem;
+            .result-amount, .final-amount {
+                font-size: 1rem;
             }
             
             .info-text {
@@ -442,7 +454,7 @@
                 padding: 8px;
             }
             
-            .compact-result, .compact-summary-item {
+            .result-item, .final-item {
                 padding: 8px;
             }
 
@@ -535,41 +547,41 @@
             </div>
             
             <div class="results-section">
-                <h2 class="section-title">Результаты за день</h2>
-                
-                <div class="compact-results">
-                    <div class="compact-result">
-                        <div class="compact-title">Заказов</div>
-                        <div class="compact-value" id="daily-orders">20.00</div>
+                <div class="results-container">
+                    <div class="daily-results">
+                        <div class="results-title">Результаты за день</div>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <div class="result-label">Заказов</div>
+                                <div class="result-amount" id="daily-orders">20.00</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Доход</div>
+                                <div class="result-amount" id="daily-income">3000.00 руб.</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Расходы</div>
+                                <div class="result-amount" id="daily-costs">450.00 руб.</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Чистый доход</div>
+                                <div class="result-amount" id="daily-profit">2550.00 руб.</div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="compact-result">
-                        <div class="compact-title">Доход</div>
-                        <div class="compact-value" id="daily-income">3000.00 руб.</div>
-                    </div>
-                    
-                    <div class="compact-result">
-                        <div class="compact-title">Расходы</div>
-                        <div class="compact-value" id="daily-costs">450.00 руб.</div>
-                    </div>
-                    
-                    <div class="compact-result">
-                        <div class="compact-title">Чистый доход</div>
-                        <div class="compact-value" id="daily-profit">2550.00 руб.</div>
-                    </div>
-                </div>
-                
-                <h2 class="section-title">Итоговый заработок</h2>
-                
-                <div class="compact-summary">
-                    <div class="compact-summary-item">
-                        <div class="summary-title">В неделю</div>
-                        <div class="summary-value" id="weekly-profit">15300.00 руб.</div>
-                    </div>
-                    
-                    <div class="compact-summary-item">
-                        <div class="summary-title">В месяц</div>
-                        <div class="summary-value" id="monthly-profit">61200.00 руб.</div>
+                    <div class="final-results">
+                        <div class="results-title">Итоговый заработок</div>
+                        <div class="final-grid">
+                            <div class="final-item">
+                                <div class="final-label">В неделю</div>
+                                <div class="final-amount" id="weekly-profit">15300.00 руб.</div>
+                            </div>
+                            <div class="final-item">
+                                <div class="final-label">В месяц</div>
+                                <div class="final-amount" id="monthly-profit">61200.00 руб.</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
