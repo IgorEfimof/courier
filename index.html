@@ -97,11 +97,13 @@
         h1 {
             font-size: 1.4rem;
             margin-bottom: 4px;
+            text-align: center;
         }
 
         .description {
             font-size: 0.85rem;
             opacity: 0.9;
+            text-align: center;
         }
 
         .theme-switch {
@@ -349,6 +351,7 @@
             .theme-switch {
                 position: static;
                 margin-top: 8px;
+                text-align: center;
             }
             
             .content {
@@ -499,22 +502,22 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="orders-per-hour">Заказов в час</label>
-                        <input type="number" id="orders-per-hour" min="0" step="0.1" value="2.5" readonly>
+                        <input type="text" id="orders-per-hour" inputmode="decimal" value="2,5" readonly>
                     </div>
                     
                     <div class="form-group">
                         <label for="income-per-hour">Сумма за час (руб.)</label>
-                        <input type="number" id="income-per-hour" min="0" step="0.1" value="375" readonly>
+                        <input type="text" id="income-per-hour" inputmode="decimal" value="375" readonly>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <p class="info-text">Средняя сумма заказа: <span id="average-order" class="average-value">150.00 руб.</span></p>
+                    <p class="info-text">Средняя сумма заказа: <span id="average-order" class="average-value">150,00 руб.</span></p>
                 </div>
                 
                 <div class="form-group">
                     <label for="hours-per-day">Рабочих часов в день</label>
-                    <input type="number" id="hours-per-day" min="0" step="0.5" value="8" readonly>
+                    <input type="text" id="hours-per-day" inputmode="decimal" value="8" readonly>
                 </div>
                 
                 <h2 class="section-title">Расходы</h2>
@@ -522,18 +525,18 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="fuel-per-day">Бензин (л/день)</label>
-                        <input type="number" id="fuel-per-day" min="0" step="any" value="5" readonly>
+                        <input type="text" id="fuel-per-day" inputmode="decimal" value="5" readonly>
                     </div>
                     
                     <div class="form-group">
                         <label for="fuel-price">Цена бензина (руб.)</label>
-                        <input type="number" id="fuel-price" min="0" step="any" value="50" readonly>
+                        <input type="text" id="fuel-price" inputmode="decimal" value="50" readonly>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="other-costs">Другие расходы (руб./день)</label>
-                    <input type="number" id="other-costs" min="0" step="any" value="200" readonly>
+                    <input type="text" id="other-costs" inputmode="decimal" value="200" readonly>
                 </div>
                 
                 <h2 class="section-title">График работы</h2>
@@ -541,13 +544,13 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="work-days-week">Дней в неделю</label>
-                        <input type="number" id="work-days-week" min="1" max="7" step="1" value="6" readonly>
+                        <input type="text" id="work-days-week" inputmode="numeric" value="6" readonly>
                     </div>
                     
                     <div class="form-group">
                         <label for="work-days-month">Дней в месяц</label>
-                        <input type="number" id="work-days-month" min="1" max="31" step="1" value="24" readonly>
-                    </div>
+                        <input type="text" id="work-days-month" inputmode="numeric" value="24" readonly>
+                </div>
                 </div>
                 
                 <button id="calculate-btn">Рассчитать</button>
@@ -559,22 +562,22 @@
                 <div class="compact-results">
                     <div class="compact-result">
                         <div class="compact-title">Заказов</div>
-                        <div class="compact-value" id="daily-orders">20.00</div>
+                        <div class="compact-value" id="daily-orders">20,00</div>
                     </div>
                     
                     <div class="compact-result">
                         <div class="compact-title">Доход</div>
-                        <div class="compact-value" id="daily-income">3000.00 руб.</div>
+                        <div class="compact-value" id="daily-income">3000,00 руб.</div>
                     </div>
                     
                     <div class="compact-result">
                         <div class="compact-title">Расходы</div>
-                        <div class="compact-value" id="daily-costs">450.00 руб.</div>
+                        <div class="compact-value" id="daily-costs">450,00 руб.</div>
                     </div>
                     
                     <div class="compact-result">
                         <div class="compact-title">Чистый доход</div>
-                        <div class="compact-value" id="daily-profit">2550.00 руб.</div>
+                        <div class="compact-value" id="daily-profit">2550,00 руб.</div>
                     </div>
                 </div>
                 
@@ -583,12 +586,12 @@
                 <div class="compact-summary">
                     <div class="compact-summary-item">
                         <div class="summary-title">В неделю</div>
-                        <div class="summary-value" id="weekly-profit">15300.00 руб.</div>
+                        <div class="summary-value" id="weekly-profit">15300,00 руб.</div>
                     </div>
                     
                     <div class="compact-summary-item">
                         <div class="summary-title">В месяц</div>
-                        <div class="summary-value" id="monthly-profit">61200.00 руб.</div>
+                        <div class="summary-value" id="monthly-profit">61200,00 руб.</div>
                     </div>
                 </div>
             </div>
@@ -613,7 +616,7 @@
             <button class="keyboard-key" data-value="1">1</button>
             <button class="keyboard-key" data-value="2">2</button>
             <button class="keyboard-key" data-value="3">3</button>
-            <button class="keyboard-key" data-value=".">.</button>
+            <button class="keyboard-key" data-value=",">,</button>
         </div>
         <div class="keyboard-row">
             <button class="keyboard-key key-wide" data-value="0">0</button>
@@ -654,6 +657,19 @@
             // Текущее активное поле ввода
             let activeInput = null;
             
+            // Функция для замены точки на запятую в числах
+            function formatNumberWithComma(number) {
+                return number.toString().replace('.', ',');
+            }
+            
+            // Функция для замены запятой на точку в числах
+            function parseNumberWithComma(value) {
+                if (typeof value === 'string') {
+                    return parseFloat(value.replace(',', '.'));
+                }
+                return value;
+            }
+            
             // Предотвращение масштабирования при двойном тапе
             document.addEventListener('dblclick', function(e) {
                 e.preventDefault();
@@ -676,30 +692,30 @@
 
             // Функция расчета средней суммы заказа
             function calculateAverageOrder() {
-                const ordersPerHour = parseFloat(ordersPerHourInput.value) || 0;
-                const incomePerHour = parseFloat(incomePerHourInput.value) || 0;
+                const ordersPerHour = parseNumberWithComma(ordersPerHourInput.value) || 0;
+                const incomePerHour = parseNumberWithComma(incomePerHourInput.value) || 0;
                 
                 if (ordersPerHour > 0) {
                     const averageOrder = incomePerHour / ordersPerHour;
-                    averageOrderElement.textContent = averageOrder.toFixed(2) + ' руб.';
+                    averageOrderElement.textContent = formatNumberWithComma(averageOrder.toFixed(2)) + ' руб.';
                 } else {
-                    averageOrderElement.textContent = '0.00 руб.';
+                    averageOrderElement.textContent = '0,00 руб.';
                 }
             }
             
             // Функция расчета
             function calculate() {
                 // Получаем значения из полей ввода
-                const ordersPerHour = parseFloat(ordersPerHourInput.value) || 0;
-                const incomePerHour = parseFloat(incomePerHourInput.value) || 0;
-                const hoursPerDay = parseFloat(hoursPerDayInput.value) || 0;
+                const ordersPerHour = parseNumberWithComma(ordersPerHourInput.value) || 0;
+                const incomePerHour = parseNumberWithComma(incomePerHourInput.value) || 0;
+                const hoursPerDay = parseNumberWithComma(hoursPerDayInput.value) || 0;
                 
-                const fuelPerDay = parseFloat(fuelPerDayInput.value) || 0;
-                const fuelPrice = parseFloat(fuelPriceInput.value) || 0;
-                const otherCosts = parseFloat(otherCostsInput.value) || 0;
+                const fuelPerDay = parseNumberWithComma(fuelPerDayInput.value) || 0;
+                const fuelPrice = parseNumberWithComma(fuelPriceInput.value) || 0;
+                const otherCosts = parseNumberWithComma(otherCostsInput.value) || 0;
                 
-                const workDaysWeek = parseFloat(workDaysWeekInput.value) || 0;
-                const workDaysMonth = parseFloat(workDaysMonthInput.value) || 0;
+                const workDaysWeek = parseNumberWithComma(workDaysWeekInput.value) || 0;
+                const workDaysMonth = parseNumberWithComma(workDaysMonthInput.value) || 0;
                 
                 // Рассчитываем среднюю сумму заказа
                 calculateAverageOrder();
@@ -715,12 +731,12 @@
                 const monthlyProfit = dailyProfit * workDaysMonth;
                 
                 // Обновляем результаты на странице
-                dailyOrdersElement.textContent = dailyOrders.toFixed(2);
-                dailyIncomeElement.textContent = dailyIncome.toFixed(2) + ' руб.';
-                dailyCostsElement.textContent = dailyCosts.toFixed(2) + ' руб.';
-                dailyProfitElement.textContent = dailyProfit.toFixed(2) + ' руб.';
-                weeklyProfitElement.textContent = weeklyProfit.toFixed(2) + ' руб.';
-                monthlyProfitElement.textContent = monthlyProfit.toFixed(2) + ' руб.';
+                dailyOrdersElement.textContent = formatNumberWithComma(dailyOrders.toFixed(2));
+                dailyIncomeElement.textContent = formatNumberWithComma(dailyIncome.toFixed(2)) + ' руб.';
+                dailyCostsElement.textContent = formatNumberWithComma(dailyCosts.toFixed(2)) + ' руб.';
+                dailyProfitElement.textContent = formatNumberWithComma(dailyProfit.toFixed(2)) + ' руб.';
+                weeklyProfitElement.textContent = formatNumberWithComma(weeklyProfit.toFixed(2)) + ' руб.';
+                monthlyProfitElement.textContent = formatNumberWithComma(monthlyProfit.toFixed(2)) + ' руб.';
             }
             
             // Показать кастомную клавиатуру
@@ -735,7 +751,7 @@
             }
             
             // Обработчики событий для полей ввода
-            const allInputs = document.querySelectorAll('input[type="number"]');
+            const allInputs = document.querySelectorAll('input');
             allInputs.forEach(input => {
                 input.addEventListener('focus', function() {
                     activeInput = this;
@@ -770,13 +786,13 @@
                     } else if (value) {
                         // Добавление значения
                         // Проверка для десятичных чисел
-                        if (value === '.' && activeInput.value.includes('.')) {
-                            return; // Не добавляем вторую точку
+                        if (value === ',' && activeInput.value.includes(',')) {
+                            return; // Не добавляем вторую запятую
                         }
                         
-                        // Если поле пустое и добавляем точку, то добавляем "0." вместо просто "."
-                        if (value === '.' && activeInput.value === '') {
-                            activeInput.value = '0.';
+                        // Если поле пустое и добавляем запятую, то добавляем "0," вместо просто ","
+                        if (value === ',' && activeInput.value === '') {
+                            activeInput.value = '0,';
                         } else {
                             activeInput.value += value;
                         }
