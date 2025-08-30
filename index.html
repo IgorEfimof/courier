@@ -370,8 +370,12 @@
             }
             
             .compact-results, .compact-summary {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 8px;
+            }
+            
+            .compact-result, .compact-summary-item {
+                min-width: calc(50% - 10px);
             }
             
             input, button {
@@ -458,6 +462,7 @@
             
             .compact-result, .compact-summary-item {
                 padding: 8px;
+                min-width: calc(50% - 8px);
             }
 
             .keyboard-key {
@@ -768,7 +773,13 @@
                         if (value === '.' && activeInput.value.includes('.')) {
                             return; // Не добавляем вторую точку
                         }
-                        activeInput.value += value;
+                        
+                        // Если поле пустое и добавляем точку, то добавляем "0." вместо просто "."
+                        if (value === '.' && activeInput.value === '') {
+                            activeInput.value = '0.';
+                        } else {
+                            activeInput.value += value;
+                        }
                     }
                     
                     // Запускаем расчет после изменения значения
