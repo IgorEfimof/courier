@@ -19,6 +19,8 @@
             --result-value-color: #27ae60;
             --summary-bg: #e8f4fc;
             --summary-title-color: #2980b9;
+            --warning-color: #e74c3c;
+            --highlight-color: #f39c12;
         }
 
         .dark-theme {
@@ -34,6 +36,8 @@
             --result-value-color: #2ecc71;
             --summary-bg: #34495e;
             --summary-title-color: #3498db;
+            --warning-color: #e74c3c;
+            --highlight-color: #f39c12;
         }
 
         * {
@@ -50,15 +54,20 @@
             line-height: 1.6;
             padding: 15px;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .container {
+            width: 100%;
             max-width: 1000px;
-            margin: 0 auto;
             background: var(--card-bg);
             border-radius: 10px;
             box-shadow: 0 0 20px var(--shadow-color);
             overflow: hidden;
+            margin: 0 auto;
         }
 
         header {
@@ -198,10 +207,28 @@
             color: var(--summary-title-color);
         }
 
+        .average-value {
+            color: var(--highlight-color);
+            font-weight: 600;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .warning {
+            color: var(--warning-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
         /* Мобильная адаптация */
         @media (max-width: 768px) {
             body {
                 padding: 10px;
+                justify-content: flex-start;
             }
             
             header {
@@ -270,6 +297,24 @@
             .result-value {
                 font-size: 0.95rem;
             }
+            
+            .info-text, .warning {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .input-section, .results-section {
+                padding: 10px;
+            }
+            
+            .form-group {
+                margin-bottom: 8px;
+            }
+            
+            input {
+                padding: 6px;
+            }
         }
     </style>
 </head>
@@ -278,7 +323,7 @@
         <header>
             <div>
                 <h1>Калькулятор заработка курьера</h1>
-                <p class="description">Расчет доходов с учетом расходов на бензин и другие затраты</p>
+                <p class="description">Расчет доходов с учетом расходов и средней суммы заказа</p>
             </div>
             <div class="theme-switch">
                 <label class="theme-switch-label">
@@ -298,13 +343,14 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="hours-per-day">Рабочих часов в день</label>
-                    <input type="number" id="hours-per-day" min="0" step="0.5" value="8">
+                    <label for="income-per-hour">Сумма за час (руб.)</label>
+                    <input type="number" id="income-per-hour" min="0" step="1" value="375">
+                    <p class="info-text">Средняя сумма заказа: <span id="average-order" class="average-value">150.00 руб.</span></p>
                 </div>
                 
                 <div class="form-group">
-                    <label for="price-per-order">Цена за один заказ (руб.)</label>
-                    <input type="number" id="price-per-order" min="0" step="1" value="150">
+                    <label for="hours-per-day">Рабочих часов в день</label>
+                    <input type="number" id="hours-per-day" min="0" step="0.5" value="8">
                 </div>
                 
                 <h2 class="section-title">Расходы</h2>
@@ -374,6 +420,10 @@
                         <div class="result-value" id="monthly-profit">61200.00 руб.</div>
                     </div>
                 </div>
+                
+                <div class="info-text">
+                    <p>Средняя сумма заказа рассчитывается автоматически: Сумма за час / Заказов в час</p>
+                </div>
             </div>
         </div>
     </div>
@@ -386,8 +436,9 @@
             
             // Параметры работы
             const ordersPerHourInput = document.getElementById('orders-per-hour');
+            const incomePerHourInput = document.getElementById('income-per-hour');
             const hoursPerDayInput = document.getElementById('hours-per-day');
-            const pricePerOrderInput = document.getElementById('price-per-order');
+            const averageOrderElement = document.getElementById('average-order');
             
             // Расходы
             const fuelPerDayInput = document.getElementById('fuel-per-day');
@@ -406,12 +457,25 @@
             const weeklyProfitElement = document.getElementById('weekly-profit');
             const monthlyProfitElement = document.getElementById('monthly-profit');
             
+            // Функция расчета средней суммы заказа
+            function calculateAverageOrder() {
+                const ordersPerHour = parseFloat(ordersPerHourInput.value) || 0;
+                const incomePerHour = parseFloat(incomePerHourInput.value) || 0;
+                
+                if (ordersPerHour > 0) {
+                    const averageOrder = incomePerHour / ordersPerHour;
+                    averageOrderElement.textContent = averageOrder.toFixed(2) + ' руб.';
+                } else {
+                    averageOrderElement.textContent = '0.00 руб.';
+                }
+            }
+            
             // Функция расчета
             function calculate() {
                 // Получаем значения из полей ввода
                 const ordersPerHour = parseFloat(ordersPerHourInput.value) || 0;
+                const incomePerHour = parseFloat(incomePerHourInput.value) || 0;
                 const hoursPerDay = parseFloat(hoursPerDayInput.value) || 0;
-                const pricePerOrder = parseFloat(pricePerOrderInput.value) || 0;
                 
                 const fuelPerDay = parseFloat(fuelPerDayInput.value) || 0;
                 const fuelPrice = parseFloat(fuelPriceInput.value) || 0;
@@ -420,9 +484,12 @@
                 const workDaysWeek = parseFloat(workDaysWeekInput.value) || 0;
                 const workDaysMonth = parseFloat(workDaysMonthInput.value) || 0;
                 
+                // Рассчитываем среднюю сумму заказа
+                calculateAverageOrder();
+                
                 // Выполняем расчеты
                 const dailyOrders = ordersPerHour * hoursPerDay;
-                const dailyIncome = dailyOrders * pricePerOrder;
+                const dailyIncome = incomePerHour * hoursPerDay;
                 const dailyFuelCost = fuelPerDay * fuelPrice;
                 const dailyCosts = dailyFuelCost + otherCosts;
                 const dailyProfit = dailyIncome - dailyCosts;
