@@ -96,35 +96,78 @@
             color: white;
             padding: 12px 15px;
             position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content {
+            flex: 1;
+            text-align: center;
         }
 
         h1 {
             font-size: 1.4rem;
             margin-bottom: 4px;
-            text-align: center;
         }
 
         .description {
             font-size: 0.85rem;
             opacity: 0.9;
-            text-align: center;
         }
 
-        .theme-switch {
-            position: absolute;
-            right: 15px;
-            top: 12px;
-        }
-
-        .theme-switch-label {
+        /* Новый стиль для переключателя темы */
+        .theme-toggle-container {
             display: flex;
             align-items: center;
-            cursor: pointer;
-            font-size: 0.85rem;
+            justify-content: center;
         }
 
-        .theme-switch-label i {
-            margin-right: 4px;
+        .theme-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle.active {
+            background-color: #3498db;
+        }
+
+        .theme-toggle-handle {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle.active .theme-toggle-handle {
+            transform: translateX(30px);
+        }
+
+        .theme-toggle-icon {
+            font-size: 12px;
+            color: #f39c12;
+        }
+
+        .theme-toggle-text {
+            margin-left: 8px;
+            font-size: 0.85rem;
+            color: white;
+            white-space: nowrap;
         }
 
         .content {
@@ -346,16 +389,16 @@
             
             header {
                 padding: 10px 12px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-content {
+                margin-bottom: 10px;
             }
             
             h1 {
                 font-size: 1.2rem;
-            }
-            
-            .theme-switch {
-                position: static;
-                margin-top: 8px;
-                text-align: center;
             }
             
             .content {
@@ -403,6 +446,20 @@
             .key-wide {
                 width: 110px;
             }
+            
+            .theme-toggle {
+                width: 55px;
+                height: 28px;
+            }
+            
+            .theme-toggle-handle {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .theme-toggle.active .theme-toggle-handle {
+                transform: translateX(27px);
+            }
         }
 
         @media (max-width: 480px) {
@@ -438,7 +495,7 @@
                 font-size: 0.78rem;
             }
             
-            .theme-switch-label {
+            .theme-toggle-text {
                 font-size: 0.8rem;
             }
 
@@ -481,21 +538,43 @@
             .key-wide {
                 width: 85px;
             }
+            
+            .theme-toggle {
+                width: 50px;
+                height: 25px;
+            }
+            
+            .theme-toggle-handle {
+                width: 21px;
+                height: 21px;
+                top: 2px;
+                left: 2px;
+            }
+            
+            .theme-toggle.active .theme-toggle-handle {
+                transform: translateX(23px);
+            }
+            
+            .theme-toggle-icon {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
 <body class="light-theme">
     <div class="container">
         <header>
-            <div>
+            <div class="header-content">
                 <h1>Калькулятор заработка курьера</h1>
                 <p class="description">Расчет доходов с учетом расходов</p>
             </div>
-            <div class="theme-switch">
-                <label class="theme-switch-label">
-                    <input type="checkbox" id="theme-toggle">
-                    <i class="fas fa-moon"></i> Тёмная тема
-                </label>
+            <div class="theme-toggle-container">
+                <div class="theme-toggle" id="theme-toggle">
+                    <div class="theme-toggle-handle">
+                        <i class="fas fa-sun theme-toggle-icon"></i>
+                    </div>
+                </div>
+                <span class="theme-toggle-text">Тёмная тема</span>
             </div>
         </header>
         
@@ -823,24 +902,40 @@
             });
             
             // Переключение темы
-            themeToggle.addEventListener('change', function() {
-                if (this.checked) {
-                    document.body.classList.remove('light-theme');
-                    document.body.classList.add('dark-theme');
+            function toggleTheme() {
+                const isDark = document.body.classList.toggle('dark-theme');
+                document.body.classList.toggle('light-theme', !isDark);
+                themeToggle.classList.toggle('active', isDark);
+                
+                // Обновляем иконку в зависимости от темы
+                const icon = themeToggle.querySelector('.theme-toggle-icon');
+                if (isDark) {
+                    icon.className = 'fas fa-moon theme-toggle-icon';
                     localStorage.setItem('theme', 'dark');
                 } else {
-                    document.body.classList.remove('dark-theme');
-                    document.body.classList.add('light-theme');
+                    icon.className = 'fas fa-sun theme-toggle-icon';
                     localStorage.setItem('theme', 'light');
                 }
-            });
+            }
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Обработка касания для мобильных устройств
+            themeToggle.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                toggleTheme();
+            }, { passive: false });
             
             // Проверка сохраненной темы
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
-                themeToggle.checked = true;
-                document.body.classList.remove('light-theme');
                 document.body.classList.add('dark-theme');
+                document.body.classList.remove('light-theme');
+                themeToggle.classList.add('active');
+                
+                // Обновляем иконку
+                const icon = themeToggle.querySelector('.theme-toggle-icon');
+                icon.className = 'fas fa-moon theme-toggle-icon';
             }
             
             // Первоначальный расчет
